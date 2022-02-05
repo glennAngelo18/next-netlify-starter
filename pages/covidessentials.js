@@ -1,11 +1,12 @@
 import Layout from "../component/Layout";
+// import NextLink from "next/link";
 import Image from "next/image";
-import bgOver from "../public/images/bg_over.PNG";
-import styles from "./css/overthecounter.module.css";
+import bgCE from "../public/images/bg_ce.PNG";
+import styles from "./css/covidessentials.module.css";
 import ProductCard from "./card/card";
 
 import { firestore, postToJSON } from "../lib/firebase";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export async function getServerSideProps() {
   const postsQuery = firestore.collectionGroup("medicine");
@@ -15,16 +16,16 @@ export async function getServerSideProps() {
     props: { posts },
   };
 }
-
-export default function Home(props) {
+export default function CovidEssentials(props) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [posts, setPosts] = useState(props.posts);
 
   const medsByCategory = posts.filter((meds) => {
-    return meds.category.toLowerCase().includes("a");
+    return meds.category.toLowerCase().includes("d");
   });
 
-  const [filteredPosts] = useState(props.posts);
-
+  // eslint-disable-next-line no-unused-vars
+  const [filteredPosts, setFilteredPosts] = useState(props.posts);
   const clientSearchHandler = (e) => {
     if (e.target.value.length >= 0 && e.target.value === "") {
       setPosts(filteredPosts);
@@ -39,13 +40,13 @@ export default function Home(props) {
     <Layout>
       <div>
         <div>
-          <Image className={styles.otc} src={bgOver} alt="no image" />
+          <Image className={styles.ce} src={bgCE} alt="no image" />
         </div>
         <div className={styles.searchContainer}>
           <input
             className={styles.search}
             type="search"
-            placeholder="Search Over the counter medicine here"
+            placeholder="Search Covid Essentials Here"
             value={medsByCategory.prodName}
             onChange={clientSearchHandler}
           />

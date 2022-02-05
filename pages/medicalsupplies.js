@@ -1,11 +1,12 @@
 import Layout from "../component/Layout";
+// import NextLink from "next/link";
 import Image from "next/image";
-import bgOver from "../public/images/bg_over.PNG";
-import styles from "./css/overthecounter.module.css";
+import bgMS from "../public/images/bg_ms.PNG";
+import styles from "./css/medical.module.css";
 import ProductCard from "./card/card";
 
 import { firestore, postToJSON } from "../lib/firebase";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export async function getServerSideProps() {
   const postsQuery = firestore.collectionGroup("medicine");
@@ -16,11 +17,11 @@ export async function getServerSideProps() {
   };
 }
 
-export default function Home(props) {
+export default function MedicalSupplies(props) {
   const [posts, setPosts] = useState(props.posts);
 
   const medsByCategory = posts.filter((meds) => {
-    return meds.category.toLowerCase().includes("a");
+    return meds.category.toLowerCase().includes("f");
   });
 
   const [filteredPosts] = useState(props.posts);
@@ -39,13 +40,13 @@ export default function Home(props) {
     <Layout>
       <div>
         <div>
-          <Image className={styles.otc} src={bgOver} alt="no image" />
+          <Image className={styles.ms} src={bgMS} alt="no image" />
         </div>
         <div className={styles.searchContainer}>
           <input
             className={styles.search}
             type="search"
-            placeholder="Search Over the counter medicine here"
+            placeholder="Search Medical Supplies Here"
             value={medsByCategory.prodName}
             onChange={clientSearchHandler}
           />

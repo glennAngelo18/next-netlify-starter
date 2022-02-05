@@ -1,9 +1,9 @@
 import Layout from "../component/Layout";
+// import NextLink from "next/link";
 import Image from "next/image";
-import bgOver from "../public/images/bg_over.PNG";
-import styles from "./css/overthecounter.module.css";
+import bgPC from "../public/images/bg_pc.PNG";
+import styles from "./css/personalcare.module.css";
 import ProductCard from "./card/card";
-
 import { firestore, postToJSON } from "../lib/firebase";
 import React, { useState } from "react";
 
@@ -16,11 +16,11 @@ export async function getServerSideProps() {
   };
 }
 
-export default function Home(props) {
+export default function PersonalCare(props) {
   const [posts, setPosts] = useState(props.posts);
 
   const medsByCategory = posts.filter((meds) => {
-    return meds.category.toLowerCase().includes("a");
+    return meds.category.toLowerCase().includes("c");
   });
 
   const [filteredPosts] = useState(props.posts);
@@ -35,17 +35,18 @@ export default function Home(props) {
       setPosts(filter);
     }
   };
+
   return (
     <Layout>
       <div>
         <div>
-          <Image className={styles.otc} src={bgOver} alt="no image" />
+          <Image className={styles.pc} src={bgPC} alt="no image" />
         </div>
         <div className={styles.searchContainer}>
           <input
             className={styles.search}
             type="search"
-            placeholder="Search Over the counter medicine here"
+            placeholder="Search Personal Care Here"
             value={medsByCategory.prodName}
             onChange={clientSearchHandler}
           />
